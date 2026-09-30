@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Biblioteca.WPF.DevolucionWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Registrar Devolución" Style="{StaticResource TituloVentana}"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Socio:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <ComboBox x:Name="cboSocio" Grid.Column="1" Height="28"
+                      DisplayMemberPath="Nombre" SelectedValuePath="SocioId"
+                      SelectionChanged="cboSocio_SelectionChanged"/>
+        </Grid>
+
+        <DataGrid x:Name="dgPendientes" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="N° Préstamo" Binding="{Binding PrestamoId}" Width="100"/>
+                <DataGridTextColumn Header="Libro" Binding="{Binding Titulo}" Width="*"/>
+                <DataGridTextColumn Header="Fecha préstamo" Binding="{Binding FechaPrestamo, StringFormat=dd/MM/yyyy}" Width="120"/>
+                <DataGridTextColumn Header="Fecha límite" Binding="{Binding FechaLimite, StringFormat=dd/MM/yyyy}" Width="110"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Row="3" Margin="0,14,0,0" Padding="14" Background="White"
+                BorderBrush="{StaticResource BrushBorde}" BorderThickness="1" CornerRadius="4">
+            <StackPanel>
+                <TextBlock Text="Resultado de la devolución" FontWeight="SemiBold"
+                           Foreground="{StaticResource BrushPrimario}" Margin="0,0,0,6"/>
+                <TextBlock x:Name="txtResultado" Text="Seleccione un libro pendiente y presione Devolver." TextWrapping="Wrap"/>
+                <TextBlock x:Name="txtMulta" FontSize="20" FontWeight="Bold" Margin="0,8,0,0"
+                           Foreground="{StaticResource BrushPeligro}"/>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button x:Name="btnDevolver" Content="Devolver libro" Width="140" Height="30" Click="btnDevolver_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

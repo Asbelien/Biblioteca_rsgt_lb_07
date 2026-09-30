@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="Biblioteca.WPF.PrestamoWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Registrar Préstamo" Style="{StaticResource TituloVentana}"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Socio:" VerticalAlignment="Center" Margin="0,0,8,8"/>
+            <ComboBox x:Name="cboSocio" Grid.Row="0" Grid.Column="1" Height="28" Margin="0,0,0,8"
+                      DisplayMemberPath="Nombre" SelectedValuePath="SocioId"
+                      SelectionChanged="cboSocio_SelectionChanged"/>
+
+            <TextBlock x:Name="txtPendientes" Grid.Row="1" Grid.Column="1" Foreground="{StaticResource BrushPrimario}" FontWeight="SemiBold"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Libro:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <ComboBox x:Name="cboLibro" Grid.Column="1" Height="28" SelectedValuePath="LibroId">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding Titulo, Mode=OneWay}"/>
+                            <Run Text=" - "/>
+                            <Run Text="{Binding AutorNombre, Mode=OneWay}"/>
+                            <Run Text="   (disponibles: "/>
+                            <Run Text="{Binding Ejemplares, Mode=OneWay}"/>
+                            <Run Text=")"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button x:Name="btnAgregar" Grid.Column="2" Content="Agregar libro" Width="120" Height="28" Margin="8,0,0,0" Click="btnAgregar_Click"/>
+        </Grid>
+
+        <DataGrid x:Name="dgSeleccion" Grid.Row="3" AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding LibroId}" Width="50"/>
+                <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="*"/>
+                <DataGridTextColumn Header="Autor" Binding="{Binding AutorNombre}" Width="200"/>
+                <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" Width="130"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button x:Name="btnQuitar" Content="Quitar libro" Width="110" Height="30" Margin="0,0,8,0"
+                    Style="{StaticResource BotonSecundario}" Click="btnQuitar_Click"/>
+            <Button x:Name="btnRegistrar" Content="Registrar préstamo" Width="150" Height="30" Click="btnRegistrar_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
